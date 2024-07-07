@@ -1,0 +1,35 @@
+# Android
+android/app/build/
+/android/build/
+/android/gradle/
+
+# IntelliJ / Android Studio
+/.idea/
+
+# Visual Studio Code
+.vscode/
+
+# Flutter/Dart specific
+**/ios/Pods/
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/flutter_project.pbxproj
+**/ios/Flutter/flutter_assets/
+
+**/android/.gradle/
+**/android/local.properties
+**/android/key.properties
+**/android/gradle-wrapper.jar
+**/android/app/build/
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/GeneratedPluginRegistrant.java
+
+# Remember to never publicly share your keystore.
+# See https://flutter.dev/docs/deployment/android#reference-the-keystore-from-the-app
+**/*.keystore
+**/*.jks
