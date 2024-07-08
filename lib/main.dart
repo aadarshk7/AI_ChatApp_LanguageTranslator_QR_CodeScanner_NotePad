@@ -43,7 +43,7 @@ class ChatScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
+            child: ListView.builder( 
               itemCount: chatProvider.messages.length,
               itemBuilder: (context, index) {
                 final message = chatProvider.messages[index];
