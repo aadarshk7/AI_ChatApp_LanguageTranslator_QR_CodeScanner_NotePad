@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       create: (_) => ChatProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Mero ChatBot App',
+        title: 'Mero AI Chat App',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
