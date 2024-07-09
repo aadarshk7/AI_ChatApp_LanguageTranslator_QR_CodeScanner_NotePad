@@ -38,7 +38,7 @@ class ChatScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MeroChatBot'),
+        title: const Text('MeroAIChat'),
       ),
       body: Column(
         children: [
