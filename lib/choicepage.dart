@@ -179,10 +179,10 @@ class _ChoicePageState extends State<ChoicePage>
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        DriverLogin()));
+                                        QR_Code_Reader()));
                               },
                               child: Text(
-                                "Driver",
+                                "QR Code Reader",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
