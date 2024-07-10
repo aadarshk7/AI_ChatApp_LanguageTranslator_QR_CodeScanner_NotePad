@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'chat_provider.dart'; // Correct import for ChatProvider
+import 'choicepage.dart';
 import 'splash_screen.dart'; // Import your SplashScreen widget
 
 void main() {
@@ -18,16 +19,15 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SplashScreen(), // Show SplashScreen first
+        home: SplashScreen(),
+        // Show SplashScreen first
         routes: {
-          '/chat': (context) => ChatScreen(), // Define your ChatScreen route
+          '/chat': (context) => ChoicePage(), // Define your ChatScreen route
         },
       ),
     );
   }
 }
-
-
 
 class ChatScreen extends StatelessWidget {
   final TextEditingController _controller = TextEditingController();
@@ -43,7 +43,7 @@ class ChatScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder( 
+            child: ListView.builder(
               itemCount: chatProvider.messages.length,
               itemBuilder: (context, index) {
                 final message = chatProvider.messages[index];
@@ -51,7 +51,7 @@ class ChatScreen extends StatelessWidget {
                 final text = isUser ? message['user'] : message['bot'];
                 return Align(
                   alignment:
-                  isUser ? Alignment.centerRight : Alignment.centerLeft,
+                      isUser ? Alignment.centerRight : Alignment.centerLeft,
                   child: Container(
                     padding: EdgeInsets.all(10),
                     margin: EdgeInsets.all(10),
