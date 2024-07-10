@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:meroaichat/main.dart';
 
 import 'LanguageTranslator/languagetranslator.dart';
 
@@ -148,14 +149,14 @@ class _ChoicePageState extends State<ChoicePage>
                           child: TextButton(
                               onPressed: () {
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (BuildContext context) => AdminPhoneOTP()));
+                                    builder: (BuildContext context) => ChatScreen()));
                                 // builder: (BuildContext context) =>
                                 //      AdminDriver()));
                                 //  builder: (BuildContext context) =>
                                 //      AdminPage(collectionName: 'users')));
                               },
                               child: Text(
-                                "Admin",
+                                "AI-Chat",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
