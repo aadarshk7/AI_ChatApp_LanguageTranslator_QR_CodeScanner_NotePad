@@ -73,54 +73,40 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                  Positioned(
-                    left: 75,
-                    top: 380,
-                    child: Container(
-                      margin: EdgeInsets.all(10),
-                      child: Center(
-                        child: Text(
-                          "Mero AI Chat",
-                          style: TextStyle(
-                            color: Colors.lightBlue.shade900,
-                            fontSize: 30,
-                            fontWeight: FontWeight.bold,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 10.0,
-                                color: Colors.black45,
-                                offset: Offset(2.0, 2.0),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
                 ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                "Mero AI Chat",
+                style: TextStyle(
+                  color: Colors.lightBlue.shade900,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 10.0,
+                      color: Colors.black45,
+                      offset: Offset(2.0, 2.0),
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
               padding: EdgeInsets.all(20.0),
               child: Column(
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: secondaryColor.withOpacity(0.2),
-                          blurRadius: 20.0,
-                          offset: Offset(0, 10),
-                        ),
-                      ],
+                  Text(
+                    "App Features",
+                    style: TextStyle(
+                      color: secondaryColor,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  SizedBox(height: 20),
                   _buildOptionButton(
                     context,
                     "Language Translator",
