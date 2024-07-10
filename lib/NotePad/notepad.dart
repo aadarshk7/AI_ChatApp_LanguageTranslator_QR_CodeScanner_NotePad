@@ -8,16 +8,20 @@ class ImagePickerDemo extends StatefulWidget {
 }
 
 class _ImagePickerDemoState extends State<ImagePickerDemo> {
-  // File? _image;
-  File ? _selectedImage;
+  File? _image;
 
-Future _pickImageFromGallery() async{
- final returnedImage= await ImagePicker().pickImage(source: ImageSource.gallery);
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
- setState(() {
-   _selectedImage = File(returnedImage!.path);
- });
-}
+    if (pickedFile != null) {
+      setState(() {
+        _image = File(pickedFile.path);
+      });
+    } else {
+      print('No image selected.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,15 +33,14 @@ Future _pickImageFromGallery() async{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _selectedImage != null
-                ? Image.file(_selectedImage!)
+            _image != null
+                ? Image.file(_image!)
                 : Text('No image selected.'),
             SizedBox(height: 20),
-            MaterialButton(
-              onPressed:()
-            {},
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: Text('Pick Image from Gallery'),
             ),
-            _selectedImage ! = null ? Image.file(_selectedImage) : const Text("Select an image")
           ],
         ),
       ),
