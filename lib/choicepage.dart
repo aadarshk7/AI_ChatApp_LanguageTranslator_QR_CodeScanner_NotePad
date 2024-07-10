@@ -124,7 +124,7 @@ class _ChoicePageState extends State<ChoicePage>
                                         LoginScreen()));
                               },
                               child: Text(
-                                "User",
+                                "Language Translator",
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold),
