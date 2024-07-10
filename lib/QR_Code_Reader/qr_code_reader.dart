@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:qr_image/qr_image.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:io';
 
@@ -111,7 +112,7 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Generated QR Code'),
-          content: SizedBox(
+          content: Container(
             width: 200,
             height: 200,
             child: QrImage(
