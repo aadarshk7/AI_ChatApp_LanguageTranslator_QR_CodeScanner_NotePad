@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import 'LanguageTranslator/languagetranslator.dart';
+
 
 
 class ChoicePage extends StatefulWidget {
@@ -121,7 +123,7 @@ class _ChoicePageState extends State<ChoicePage>
                                   // builder: (BuildContext context) =>
                                   //     LoginScreen()));
                                     builder: (BuildContext context) =>
-                                        LoginScreen()));
+                                        LanguageTranslator()));
                               },
                               child: Text(
                                 "Language Translator",
