@@ -114,11 +114,7 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
           content: Container(
             width: 200,
             height: 200,
-            child: QrImage(
-              data: 'https://flutter.dev',
-              version: QrVersions.auto,
-              size: 200.0,
-            ),
+
           ),
           actions: <Widget>[
             TextButton(
