@@ -44,7 +44,7 @@ class _ChoicePageState extends State<ChoicePage>
             child: Column(
               children: <Widget>[
                 Container(
-                  height: 420,
+                  height: 200,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage('assets/images/merochatbotimg.jpg'),
@@ -70,7 +70,7 @@ class _ChoicePageState extends State<ChoicePage>
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image:
-                                    AssetImage('assets/images/merochatbotimg.jpg'))),
+                                    AssetImage('assets/images/'))),
                           )),
                       Positioned(
                           left: 75,
