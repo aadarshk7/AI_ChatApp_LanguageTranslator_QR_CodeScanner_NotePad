@@ -78,21 +78,21 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
             ),
             Container(
               margin: EdgeInsets.symmetric(vertical: 20),
-              child: Text(
-                "Mero AI Chat",
-                style: TextStyle(
-                  color: Colors.lightBlue.shade900,
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 10.0,
-                      color: Colors.black45,
-                      offset: Offset(2.0, 2.0),
-                    ),
-                  ],
-                ),
-              ),
+              // child: Text(
+              //   "Mero AI Chat",
+              //   style: TextStyle(
+              //     color: Colors.lightBlue.shade900,
+              //     fontSize: 30,
+              //     fontWeight: FontWeight.bold,
+              //     shadows: [
+              //       Shadow(
+              //         blurRadius: 10.0,
+              //         color: Colors.black45,
+              //         offset: Offset(2.0, 2.0),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ),
             Padding(
               padding: EdgeInsets.all(20.0),
