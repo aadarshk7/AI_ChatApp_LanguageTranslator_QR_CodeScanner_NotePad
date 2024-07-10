@@ -60,19 +60,19 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                  Positioned(
-                    right: 40,
-                    top: 40,
-                    width: 80,
-                    height: 150,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/light-2.png'),
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Positioned(
+                  //   right: 40,
+                  //   top: 40,
+                  //   width: 80,
+                  //   height: 150,
+                  //   child: Container(
+                  //     decoration: BoxDecoration(
+                  //       image: DecorationImage(
+                  //         image: AssetImage('assets/images/light-2.png'),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
