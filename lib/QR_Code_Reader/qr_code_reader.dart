@@ -1,9 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; // For clipboard
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QR_Code_Reader extends StatefulWidget {
@@ -32,35 +32,54 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
       appBar: AppBar(
         title: Text('QR Code Scanner'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  _pickImage();
-                },
-                child: Text('Pick QR Code Image from Gallery'),
-              ),
-              SizedBox(height: 20),
-              Divider(height: 1, color: Colors.grey),
-              SizedBox(height: 20),
-              _buildQrView(context),
-              SizedBox(height: 20),
-              _buildScanResult(),
-            ],
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            flex: 4,
+            child: _buildQrView(context),
           ),
-        ),
+          Expanded(
+            flex: 1,
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  if (qrText != null)
+                    GestureDetector(
+                      onTap: () {
+                        Clipboard.setData(ClipboardData(text: qrText!));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Copied to Clipboard')),
+                        );
+                      },
+                      child: Text(
+                        'Scan Result: $qrText',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      _pickImage();
+                    },
+                    child: Text('Pick QR Code Image from Gallery'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildQrView(BuildContext context) {
-    var scanArea = MediaQuery.of(context).size.width < 400 ||
-        MediaQuery.of(context).size.height < 400
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+            MediaQuery.of(context).size.height < 400)
         ? 150.0
         : 300.0;
     return QRView(
@@ -75,31 +94,6 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
       ),
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
-  }
-
-  Widget _buildScanResult() {
-    return qrText != null
-        ? GestureDetector(
-      onTap: () {
-        Clipboard.setData(ClipboardData(text: qrText!));
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Copied to Clipboard')),
-        );
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Text(
-          'Scan Result: $qrText',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 18,
-            color: Colors.blue,
-            decoration: TextDecoration.underline,
-          ),
-        ),
-      ),
-    )
-        : Container();
   }
 
   void _onQRViewCreated(QRViewController controller) {
@@ -131,8 +125,11 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
+      // Here you can use any QR code decoding library to decode the image
+      // For simplicity, we will set the image path as the QR code text
+      // You might want to use a QR code decoding library here
       setState(() {
-        qrText = pickedFile.path; // Placeholder for decoded QR code string
+        qrText = pickedFile.path; // Set this to the decoded QR code string
       });
     }
   }
@@ -144,10 +141,4 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
       throw 'Could not launch $url';
     }
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: QR_Code_Reader(),
-  ));
 }
