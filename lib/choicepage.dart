@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:meroaichat/NotePad/notepad.dart';
 import 'package:meroaichat/main.dart';
 import 'LanguageTranslator/languagetranslator.dart';
 import 'QR_Code_Reader/qr_code_reader.dart';
@@ -137,7 +138,7 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
                   _buildOptionButton(
                     context,
                     "NotePad",
-                    QR_Code_Reader(),
+                    NotePad(),
                     secondaryColor,
                   ),
                   SizedBox(
