@@ -1,9 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'dart:async';
-import 'dart:io';
 
 class QR_Code_Reader extends StatefulWidget {
   @override
@@ -138,10 +137,10 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
       // Read file as bytes
       List<int> imageBytes = await file.readAsBytes();
 
-      // Use QRCodeReader from qr_code_scanner to decode image bytes
-      String? result = await QRCodeReader().decodeFromBytes(imageBytes);
+      // Use QR code scanner library to decode QR code from image bytes
+      Barcode result = await BarcodeScanner.scanBytes(imageBytes);
 
-      return result ?? 'QR code not recognized';
+      return result.code;
     } catch (e) {
       print('Error decoding QR code: $e');
       return 'Failed to decode QR code';
