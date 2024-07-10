@@ -31,6 +31,8 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final secondaryColor = Theme.of(context).colorScheme.secondary;
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -109,7 +111,7 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
                       borderRadius: BorderRadius.circular(10),
                       boxShadow: [
                         BoxShadow(
-                          color: Color.fromRGBO(143, 148, 251, .2),
+                          color: secondaryColor.withOpacity(0.2),
                           blurRadius: 20.0,
                           offset: Offset(0, 10),
                         ),
@@ -123,6 +125,7 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
                     context,
                     "Language Translator",
                     LanguageTranslator(),
+                    secondaryColor,
                   ),
                   SizedBox(
                     height: 30,
@@ -131,6 +134,7 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
                     context,
                     "AI-Chat",
                     ChatScreen(),
+                    secondaryColor,
                   ),
                   SizedBox(
                     height: 30,
@@ -139,6 +143,7 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
                     context,
                     "QR Code Reader",
                     QR_Code_Reader(),
+                    secondaryColor,
                   ),
                   SizedBox(
                     height: 70,
@@ -152,15 +157,16 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildOptionButton(BuildContext context, String text, Widget page) {
+  Widget _buildOptionButton(
+      BuildContext context, String text, Widget page, Color color) {
     return Container(
       height: 50,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         gradient: LinearGradient(
           colors: [
-            Color.fromRGBO(143, 148, 251, 1),
-            Color.fromRGBO(143, 148, 251, .6),
+            color,
+            color.withOpacity(0.6),
           ],
         ),
       ),
