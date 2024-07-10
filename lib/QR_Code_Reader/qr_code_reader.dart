@@ -125,11 +125,11 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      final File file = File(pickedFile.path);
       // Here you can use any QR code decoding library to decode the image
       // For simplicity, we will set the image path as the QR code text
+      // You might want to use a QR code decoding library here
       setState(() {
-        qrText = file.path;
+        qrText = pickedFile.path; // Set this to the decoded QR code string
       });
     }
   }
