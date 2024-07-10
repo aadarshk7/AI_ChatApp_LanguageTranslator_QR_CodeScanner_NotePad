@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
 
 class QR_Code_Reader extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('QR Code Generator and Scanner'),
+        title: Text('QR Code Scanner'),
       ),
       body: Column(
         children: <Widget>[
@@ -42,16 +43,25 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   if (qrText != null)
-                    Text(
-                      'Scan Result: $qrText',
-                      style: TextStyle(fontSize: 18),
+                    GestureDetector(
+                      onTap: () {
+                        _launchURL(qrText!);
+                      },
+                      child: Text(
+                        'Scan Result: $qrText',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
                     ),
                   SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
-                      _showQrCodeDialog(context);
+                      _pickImage();
                     },
-                    child: Text('Generate QR Code'),
+                    child: Text('Pick QR Code Image from Gallery'),
                   ),
                 ],
               ),
@@ -105,31 +115,24 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
     super.dispose();
   }
 
-  void _showQrCodeDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Generated QR Code'),
-          content: Container(
-            width: 200,
-            height: 200,
-            // child: QrImage(
-            //   data: 'https://flutter.dev',
-            //   version: QrVersions.auto,
-            //   size: 200.0,
-            // ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Close'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      // Process the picked image for QR code here
+      // For simplicity, we'll just display the image path as QR code text
+      setState(() {
+        qrText = pickedFile.path;
+      });
+    }
+  }
+
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
