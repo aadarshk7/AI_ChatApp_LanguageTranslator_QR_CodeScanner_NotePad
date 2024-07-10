@@ -47,7 +47,7 @@ class _ChoicePageState extends State<ChoicePage>
                   height: 420,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: AssetImage('assets/images/background.png'),
+                          image: AssetImage('assets/images/a.png'),
                           fit: BoxFit.fill)),
                   child: Stack(
                     children: <Widget>[
