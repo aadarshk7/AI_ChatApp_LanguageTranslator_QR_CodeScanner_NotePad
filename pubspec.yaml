@@ -46,6 +46,7 @@ dependencies:
   image_picker: ^0.8.4+3
   permission_handler: ^11.3.1
   file_picker: ^8.0.6
+  flutter_barcode_scanner: ^2.0.0
 
 dev_dependencies:
   flutter_test:
