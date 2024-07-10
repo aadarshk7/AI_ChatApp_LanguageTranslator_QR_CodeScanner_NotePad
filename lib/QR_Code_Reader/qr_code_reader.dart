@@ -79,7 +79,7 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
 
   Widget _buildQrView(BuildContext context) {
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
+        MediaQuery.of(context).size.height < 400)
         ? 150.0
         : 300.0;
     return QRView(
@@ -125,11 +125,11 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
+      final File file = File(pickedFile.path);
       // Here you can use any QR code decoding library to decode the image
       // For simplicity, we will set the image path as the QR code text
-      // You might want to use a QR code decoding library here
       setState(() {
-        qrText = pickedFile.path; // Set this to the decoded QR code string
+        qrText = file.path;
       });
     }
   }
