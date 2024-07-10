@@ -1,99 +1,94 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'chat_provider.dart'; // Correct import for ChatProvider
-import 'choicepage.dart';
-import 'splash_screen.dart'; // Import your SplashScreen widget
+import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart'; // For clipboard
 
-void main() {
-  runApp(MyApp());
+class QR_Code_Reader extends StatefulWidget {
+  @override
+  _QR_Code_ReaderState createState() => _QR_Code_ReaderState();
 }
 
-class MyApp extends StatelessWidget {
+class _QR_Code_ReaderState extends State<QR_Code_Reader> {
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  QRViewController? controller;
+  String? qrText;
+
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ChatProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Mero AI Chat App',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: SplashScreen(),
-        // Show SplashScreen first
-        routes: {
-          '/chat': (context) => ChoicePage(), // Define your ChatScreen route
-        },
+  void reassemble() {
+    super.reassemble();
+    if (Platform.isAndroid) {
+      controller!.pauseCamera();
+    } else if (Platform.isIOS) {
+      controller!.resumeCamera();
+    }
+  }
+
+
+
+  Widget _buildQrView(BuildContext context) {
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+        MediaQuery.of(context).size.height < 400)
+        ? 150.0
+        : 300.0;
+    return QRView(
+      key: qrKey,
+      onQRViewCreated: _onQRViewCreated,
+      overlay: QrScannerOverlayShape(
+        borderColor: Colors.red,
+        borderRadius: 10,
+        borderLength: 30,
+        borderWidth: 10,
+        cutOutSize: scanArea,
       ),
+      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
   }
-}
 
-class ChatScreen extends StatelessWidget {
-  final TextEditingController _controller = TextEditingController();
+  void _onQRViewCreated(QRViewController controller) {
+    setState(() {
+      this.controller = controller;
+    });
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        qrText = scanData.code;
+      });
+    });
+  }
+
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    if (!p) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('No permission')));
+    }
+  }
 
   @override
-  Widget build(BuildContext context) {
-    final chatProvider = Provider.of<ChatProvider>(context);
+  void dispose() {
+    controller?.dispose();
+    super.dispose();
+  }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('MeroAIChat'),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: chatProvider.messages.length,
-              itemBuilder: (context, index) {
-                final message = chatProvider.messages[index];
-                final isUser = message.containsKey('user');
-                final text = isUser ? message['user'] : message['bot'];
-                return Align(
-                  alignment:
-                      isUser ? Alignment.centerRight : Alignment.centerLeft,
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: isUser ? Colors.blue : Colors.grey,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Text(
-                      text!,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      hintText: 'Type your message...',
-                    ),
-                  ),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    if (_controller.text.isNotEmpty) {
-                      chatProvider.sendMessage(_controller.text);
-                      _controller.clear();
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      // Process the picked image for QR code here
+      // For simplicity, we'll just display the image path as QR code text
+      // Implement QR code decoding from image if required
+      setState(() {
+        qrText = pickedFile.path;
+      });
+    }
+  }
+
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: true, forceWebView: true); // for iOS
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
