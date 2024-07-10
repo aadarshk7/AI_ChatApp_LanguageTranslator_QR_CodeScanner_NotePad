@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-import 'package:flutter/services.dart'; // For clipboard
+import 'package:flutter/services.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'dart:async';
+import 'dart:io';
 
 class QR_Code_Reader extends StatefulWidget {
   @override
@@ -125,9 +125,6 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
 
     if (pickedFile != null) {
       final file = File(pickedFile.path);
-      // Here you need to use a QR code decoding library to decode the QR code from the image
-      // For example, using qr_code_scanner, you might need another package like 'qr' for decoding from image
-      // This is just a placeholder
       String decodedQrCode = await _decodeQrCodeFromFile(file);
 
       setState(() {
@@ -137,9 +134,18 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
   }
 
   Future<String> _decodeQrCodeFromFile(File file) async {
-    // Implement the logic to decode QR code from file here
-    // This might require another package or custom implementation
-    // Placeholder for actual QR code decoding logic
-    return "Decoded QR code from image";
+    try {
+      final result = await FlutterQrReader.imgScan(file.path);
+      return result!;
+    } catch (e) {
+      print('Error decoding QR code: $e');
+      return 'Failed to decode QR code';
+    }
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: QR_Code_Reader(),
+  ));
 }
