@@ -132,6 +132,15 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
                     secondaryColor,
                   ),
                   SizedBox(
+                    height: 30,
+                  ),
+                  _buildOptionButton(
+                    context,
+                    "NotePad",
+                    QR_Code_Reader(),
+                    secondaryColor,
+                  ),
+                  SizedBox(
                     height: 70,
                   ),
                 ],
