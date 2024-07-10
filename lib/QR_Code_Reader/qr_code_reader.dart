@@ -124,7 +124,7 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      final file = File(pickedFile.path);
+      final File file = File(pickedFile.path);
       String decodedQrCode = await _decodeQrCodeFromFile(file);
 
       setState(() {
@@ -135,8 +135,13 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
 
   Future<String> _decodeQrCodeFromFile(File file) async {
     try {
-      final result = await FlutterQrReader.imgScan(file.path);
-      return result!;
+      // Read file as bytes
+      List<int> imageBytes = await file.readAsBytes();
+
+      // Use QRCodeReader from qr_code_scanner to decode image bytes
+      String? result = await QRCodeReader().decodeFromBytes(imageBytes);
+
+      return result ?? 'QR code not recognized';
     } catch (e) {
       print('Error decoding QR code: $e');
       return 'Failed to decode QR code';
