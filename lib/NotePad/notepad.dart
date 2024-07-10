@@ -14,6 +14,9 @@ class _ImagePickerDemoState extends State<ImagePickerDemo> {
 Future _pickImageFromGallery() async{
  final returnedImage= await ImagePicker().pickImage(source: ImageSource.gallery);
 
+ setState(() {
+   _selectedImage = File(returnedImage!.path);
+ });
 }
 
   @override
@@ -26,14 +29,15 @@ Future _pickImageFromGallery() async{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _image != null
-                ? Image.file(_image!)
+            _selectedImage != null
+                ? Image.file(_selectedImage!)
                 : Text('No image selected.'),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: Text('Pick Image from Gallery'),
+            MaterialButton(
+              onPressed:()
+            {},
             ),
+            _selectedImage ! = null ? Image.file(_selectedImage) : const Text("Select an image")
           ],
         ),
       ),
