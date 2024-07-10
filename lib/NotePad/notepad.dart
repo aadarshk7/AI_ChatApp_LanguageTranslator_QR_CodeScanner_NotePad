@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
 void main() => runApp(NotePad());
@@ -20,14 +20,19 @@ class FilePickerWidget extends StatefulWidget {
 }
 
 class _FilePickerWidgetState extends State<FilePickerWidget> {
-  final ImagePicker _picker = ImagePicker();
-  XFile? _file;
+  String? _filePath;
 
   Future<void> _pickFile() async {
-    final XFile? selectedFile = await _picker.pickFiles();
-    setState(() {
-      _file = selectedFile;
-    });
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      File file = File(result.files.single.path!);
+      setState(() {
+        _filePath = file.path;
+      });
+    } else {
+      // User canceled the picker
+    }
   }
 
   @override
@@ -40,7 +45,7 @@ class _FilePickerWidgetState extends State<FilePickerWidget> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _file != null ? Text('File path: ${_file!.path}') : Text('No file selected.'),
+            _filePath != null ? Text('File path: $_filePath') : Text('No file selected.'),
             ElevatedButton(
               onPressed: _pickFile,
               child: Text('Pick File from Gallery'),
