@@ -44,7 +44,7 @@ class _ChoicePageState extends State<ChoicePage>
             child: Column(
               children: <Widget>[
                 Container(
-                  height: 200,
+                  height: 400,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage('assets/images/merochatbotimg.jpg'),
@@ -74,7 +74,7 @@ class _ChoicePageState extends State<ChoicePage>
                           )),
                       Positioned(
                           left: 75,
-                          top: 370,
+                          top: 380,
                           child: Container(
                             margin: EdgeInsets.all(10),
                             child: Center(
