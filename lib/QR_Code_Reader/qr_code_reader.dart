@@ -3,6 +3,7 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart'; // For clipboard
 
 class QR_Code_Reader extends StatefulWidget {
   @override
@@ -44,6 +45,12 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
                 children: <Widget>[
                   if (qrText != null)
                     GestureDetector(
+                      onLongPress: () {
+                        Clipboard.setData(ClipboardData(text: qrText!));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Copied to Clipboard')),
+                        );
+                      },
                       onTap: () {
                         _launchURL(qrText!);
                       },
@@ -122,6 +129,7 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
     if (pickedFile != null) {
       // Process the picked image for QR code here
       // For simplicity, we'll just display the image path as QR code text
+      // Implement QR code decoding from image if required
       setState(() {
         qrText = pickedFile.path;
       });
@@ -130,7 +138,7 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
 
   void _launchURL(String url) async {
     if (await canLaunch(url)) {
-      await launch(url);
+      await launch(url, forceSafariVC: true, forceWebView: true); // for iOS
     } else {
       throw 'Could not launch $url';
     }
