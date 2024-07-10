@@ -99,7 +99,7 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
               child: Column(
                 children: <Widget>[
                   Text(
-                    "App Features",
+                    "App Features..",
                     style: TextStyle(
                       color: secondaryColor,
                       fontSize: 24,
