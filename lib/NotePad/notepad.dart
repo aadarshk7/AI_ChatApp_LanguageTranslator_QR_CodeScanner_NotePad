@@ -8,25 +8,25 @@ class NotePad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Image Picker Demo',
-      home: ImagePickerWidget(),
+      title: 'File Picker Demo',
+      home: FilePickerWidget(),
     );
   }
 }
 
-class ImagePickerWidget extends StatefulWidget {
+class FilePickerWidget extends StatefulWidget {
   @override
-  _ImagePickerWidgetState createState() => _ImagePickerWidgetState();
+  _FilePickerWidgetState createState() => _FilePickerWidgetState();
 }
 
-class _ImagePickerWidgetState extends State<ImagePickerWidget> {
+class _FilePickerWidgetState extends State<FilePickerWidget> {
   final ImagePicker _picker = ImagePicker();
-  XFile? _image;
+  XFile? _file;
 
-  Future<void> _pickImage() async {
-    final XFile? selectedImage = await _picker.pickImage(source: ImageSource.gallery);
+  Future<void> _pickFile() async {
+    final XFile? selectedFile = await _picker.pickFiles();
     setState(() {
-      _image = selectedImage;
+      _file = selectedFile;
     });
   }
 
@@ -34,16 +34,16 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Picker Demo'),
+        title: Text('File Picker Demo'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            _image != null ? Image.file(File(_image!.path)) : Text('No image selected.'),
+            _file != null ? Text('File path: ${_file!.path}') : Text('No file selected.'),
             ElevatedButton(
-              onPressed: _pickImage,
-              child: Text('Pick Image from Gallery'),
+              onPressed: _pickFile,
+              child: Text('Pick File from Gallery'),
             ),
           ],
         ),
