@@ -77,7 +77,7 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
+              margin: EdgeInsets.symmetric(vertical: 1),
               // child: Text(
               //   "Mero AI Chat",
               //   style: TextStyle(
