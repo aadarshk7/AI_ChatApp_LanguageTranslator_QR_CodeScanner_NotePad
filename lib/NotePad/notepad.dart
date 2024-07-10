@@ -8,9 +8,13 @@ class ImagePickerDemo extends StatefulWidget {
 }
 
 class _ImagePickerDemoState extends State<ImagePickerDemo> {
-  File? _image;
+  // File? _image;
+  File ? _selectedImage;
 
+Future _pickImageFromGallery() async{
+ final returnedImage= await ImagePicker().pickImage(source: ImageSource.gallery);
 
+}
 
   @override
   Widget build(BuildContext context) {
