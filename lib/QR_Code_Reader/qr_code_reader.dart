@@ -1,8 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'dart:io';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart'; // For clipboard
+import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QR_Code_Reader extends StatefulWidget {
   @override
@@ -11,7 +13,18 @@ class QR_Code_Reader extends StatefulWidget {
 
 class _QR_Code_ReaderState extends State<QR_Code_Reader> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  QRViewController? controller;
   String? qrText;
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    if (Platform.isAndroid) {
+      controller!.pauseCamera();
+    } else if (Platform.isIOS) {
+      controller!.resumeCamera();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +34,10 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
       ),
       body: Column(
         children: <Widget>[
+          Expanded(
+            flex: 4,
+            child: _buildQrView(context),
+          ),
           Expanded(
             flex: 1,
             child: Center(
@@ -60,8 +77,46 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
     );
   }
 
+  Widget _buildQrView(BuildContext context) {
+    var scanArea = (MediaQuery.of(context).size.width < 400 ||
+            MediaQuery.of(context).size.height < 400)
+        ? 150.0
+        : 300.0;
+    return QRView(
+      key: qrKey,
+      onQRViewCreated: _onQRViewCreated,
+      overlay: QrScannerOverlayShape(
+        borderColor: Colors.red,
+        borderRadius: 10,
+        borderLength: 30,
+        borderWidth: 10,
+        cutOutSize: scanArea,
+      ),
+      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+    );
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    setState(() {
+      this.controller = controller;
+    });
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        qrText = scanData.code;
+      });
+    });
+  }
+
+  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+    if (!p) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('No permission')));
+    }
+  }
+
   @override
   void dispose() {
+    controller?.dispose();
     super.dispose();
   }
 
@@ -70,38 +125,20 @@ class _QR_Code_ReaderState extends State<QR_Code_Reader> {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-      final File file = File(pickedFile.path);
-      String decodedQrCode = await _decodeQrCodeFromFile(file);
-
+      // Here you can use any QR code decoding library to decode the image
+      // For simplicity, we will set the image path as the QR code text
+      // You might want to use a QR code decoding library here
       setState(() {
-        qrText = decodedQrCode;
+        qrText = pickedFile.path; // Set this to the decoded QR code string
       });
     }
   }
 
-  Future<String> _decodeQrCodeFromFile(File file) async {
-    try {
-      // Read file as bytes
-      List<int> imageBytes = await file.readAsBytes();
-
-      // Use Flutter Barcode Scanner plugin to decode QR code from image bytes
-      String result = await FlutterBarcodeScanner.scanBarcode(
-        '#FF6666', // Scanner overlay color
-        'Cancel', // Cancel button text
-        false, // Use flash
-        ScanMode.DEFAULT, // Scan mode
-      );
-
-      return result;
-    } catch (e) {
-      print('Error decoding QR code: $e');
-      return 'Failed to decode QR code';
+  void _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url, forceSafariVC: true, forceWebView: true); // for iOS
+    } else {
+      throw 'Could not launch $url';
     }
   }
-}
-
-void main() {
-  runApp(MaterialApp(
-    home: QR_Code_Reader(),
-  ));
 }
