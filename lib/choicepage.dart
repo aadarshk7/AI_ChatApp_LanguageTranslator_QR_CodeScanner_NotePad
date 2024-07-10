@@ -138,7 +138,7 @@ class _ChoicePageState extends State<ChoicePage> with TickerProviderStateMixin {
                   _buildOptionButton(
                     context,
                     "NotePad",
-                    NotePad(),
+                    ImagePickerDemo(),
                     secondaryColor,
                   ),
                   SizedBox(
