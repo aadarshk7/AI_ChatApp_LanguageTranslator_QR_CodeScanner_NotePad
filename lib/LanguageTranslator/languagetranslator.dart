@@ -172,6 +172,12 @@ class LanguageTranslatorScreen extends StatelessWidget {
         ],
         currentIndex: 2,
         onTap: (index) {
+          if(index ==1){
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context)=> CameraScannerScreen()),
+            );
+          }
           // Handle bottom navigation tap
         },
       ),
