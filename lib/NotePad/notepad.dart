@@ -11,6 +11,7 @@ class NotePad extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => NotepadProvider(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Notepad',
         theme: ThemeData(
           primarySwatch: Colors.blue,
