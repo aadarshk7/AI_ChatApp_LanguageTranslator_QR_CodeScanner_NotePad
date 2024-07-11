@@ -166,7 +166,7 @@ class LanguageTranslatorScreen extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.language),
-            label: 'Translate',
+            label: 'Translate', //translate
           ),
         ],
         currentIndex: 2,
