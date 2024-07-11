@@ -10,7 +10,7 @@ class LanguageTranslator extends StatelessWidget {
 appBar: AppBar(
 
 ),
-      body: Text("Language Translator"),
+      body: Text("Language Translator Basic"),
     );
   }
 }
