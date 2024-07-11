@@ -189,9 +189,9 @@ class LanguageTranslatorProvider extends ChangeNotifier {
   final translator = GoogleTranslator();
   final flutterTts = FlutterTts();
 
-  List<String> languages = ['English', 'Spanish', 'French', 'German', 'Nepal'];
+  List<String> languages = ['English', 'Spanish', 'French', 'German', 'Nepali'];
   String fromLanguage = 'English';
-  String toLanguage = 'Nepal';
+  String toLanguage = 'Nepali';
   String translatedText = '';
 
   void setFromLanguage(String language) {
