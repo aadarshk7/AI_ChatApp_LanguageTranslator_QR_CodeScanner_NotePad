@@ -1,3 +1,15 @@
+buildscript {
+    ext.kotlin_version = '1.9.10' // Update this to match the Kotlin version used by the flutter_tts plugin
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 allprojects {
     repositories {
         google()
