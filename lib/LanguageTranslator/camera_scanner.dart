@@ -52,7 +52,7 @@ class _CameraScannerScreenState extends State<CameraScannerScreen> {
                   if (qrText != null)
                     GestureDetector(
                       onLongPress: () {
-                        Clipboard.setData(ClipboardData(text: qrText));
+                        Clipboard.setData(ClipboardData(text: qrText!));
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text('Copied to Clipboard')),
                         );
