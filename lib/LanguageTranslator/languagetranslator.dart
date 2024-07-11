@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:translator/translator.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(LanguageTranslator());
@@ -82,77 +82,73 @@ class LanguageTranslatorScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      provider.fromLanguage,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    TextField(
-                      controller: _controller,
-                      maxLines: 5,
-                      decoration: InputDecoration.collapsed(
-                          hintText: 'Enter text to translate'),
-                    ),
-                    SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () async {
-                        await provider.translateText(_controller.text);
-                      },
-                      child: Text('Translate'),
-                    ),
-                  ],
-                ),
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    provider.fromLanguage,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  TextField(
+                    controller: _controller,
+                    maxLines: 5,
+                    decoration: InputDecoration.collapsed(
+                        hintText: 'Enter text to translate'),
+                  ),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () async {
+                      await provider.translateText(_controller.text);
+                    },
+                    child: Text('Translate'),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 20),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(16.0),
-                decoration: BoxDecoration(
-                  color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      provider.toLanguage,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10),
-                    Text(provider.translatedText),
-                    SizedBox(height: 10),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.volume_up),
-                          onPressed: () {
-                            provider.speakText(provider.translatedText);
-                          },
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.copy),
-                          onPressed: () {
-                            Clipboard.setData(
-                                ClipboardData(text: provider.translatedText));
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text('Copied to Clipboard')));
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    provider.toLanguage,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 10),
+                  Text(provider.translatedText),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.volume_up),
+                        onPressed: () {
+                          provider.speakText(provider.translatedText);
+                        },
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.copy),
+                        onPressed: () {
+                          Clipboard.setData(
+                              ClipboardData(text: provider.translatedText));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Copied to Clipboard')));
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
@@ -186,9 +182,9 @@ class LanguageTranslatorProvider extends ChangeNotifier {
   final translator = GoogleTranslator();
   final flutterTts = FlutterTts();
 
-  List<String> languages = ['English', 'Spanish', 'French', 'German','Nepal'];
+  List<String> languages = ['English', 'Spanish', 'French', 'German'];
   String fromLanguage = 'English';
-  String toLanguage = 'Nepal';
+  String toLanguage = 'Spanish';
   String translatedText = '';
 
   void setFromLanguage(String language) {
@@ -209,8 +205,9 @@ class LanguageTranslatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void speakText(String text) {
-    flutterTts.speak(text);
+  void speakText(String text) async {
+    await flutterTts.setLanguage(_getLanguageCode(toLanguage));
+    await flutterTts.speak(text);
   }
 
   String _getLanguageCode(String language) {
@@ -223,8 +220,6 @@ class LanguageTranslatorProvider extends ChangeNotifier {
         return 'fr';
       case 'German':
         return 'de';
-      case 'Nepal':
-        return 'ne';
       default:
         return 'en';
     }
