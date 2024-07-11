@@ -47,8 +47,7 @@ class LanguageTranslatorScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-    child:
+      body:
       Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -160,7 +159,6 @@ class LanguageTranslatorScreen extends StatelessWidget {
           ],
         ),
       ),
-      ),
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
@@ -181,7 +179,6 @@ class LanguageTranslatorScreen extends StatelessWidget {
           // Handle bottom navigation tap
         },
       ),
-
     );
   }
 }
