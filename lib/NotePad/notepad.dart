@@ -5,15 +5,16 @@ import 'package:provider/provider.dart';
 import 'dart:io';
 
 void main() {
-  runApp(MyApp());
+  runApp(NotePad());
 }
 
-class MyApp extends StatelessWidget {
+class NotePad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (_) => NotepadProvider(),
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Notepad',
         theme: ThemeData(
           primarySwatch: Colors.blue,
@@ -111,7 +112,7 @@ class NotepadScreen extends StatelessWidget {
             },
           ),
           CircleAvatar(
-            backgroundImage: NetworkImage('https://example.com/user.png'),
+            backgroundImage: NetworkImage('https://aadarshkunwar.com.np/assets/imgs/coat6v2.jpg'),
           ),
         ],
       ),
