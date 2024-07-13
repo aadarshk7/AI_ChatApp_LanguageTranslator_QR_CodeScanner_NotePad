@@ -82,80 +82,76 @@ class LanguageTranslatorScreen extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        provider.fromLanguage,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 10),
-                      TextField(
-                        controller: _controller,
-                        maxLines: 5,
-                        decoration: InputDecoration.collapsed(
-                            hintText: 'Enter text to translate'),
-                      ),
-                      SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await provider.translateText(_controller.text);
-                        },
-                        child: Text('Translate'),
-                      ),
-                    ],
-                  ),
+            SingleChildScrollView( // Wrap the Container with SingleChildScrollView
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      provider.fromLanguage,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: _controller,
+                      maxLines: 5,
+                      decoration: InputDecoration.collapsed(
+                          hintText: 'Enter text to translate'),
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await provider.translateText(_controller.text);
+                      },
+                      child: Text('Translate'),
+                    ),
+                  ],
                 ),
               ),
             ),
             SizedBox(height: 20),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        provider.toLanguage,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 10),
-                      Text(provider.translatedText),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.volume_up),
-                            onPressed: () {
-                              // provider.speakText(provider.translatedText);
-                            },
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.copy),
-                            onPressed: () {
-                              Clipboard.setData(
-                                  ClipboardData(text: provider.translatedText));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Copied to Clipboard')));
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+            SingleChildScrollView( // Wrap the Container with SingleChildScrollView
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      provider.toLanguage,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    Text(provider.translatedText),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.volume_up),
+                          onPressed: () {
+                            // provider.speakText(provider.translatedText);
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.copy),
+                          onPressed: () {
+                            Clipboard.setData(
+                                ClipboardData(text: provider.translatedText));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Copied to Clipboard')));
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
