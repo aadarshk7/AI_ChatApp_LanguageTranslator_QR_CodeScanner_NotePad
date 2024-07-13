@@ -94,5 +94,7 @@ dependencies {
 //    implementation("com.google.firebase:firebase-auth")
     implementation ('com.android.support:multidex:1.0.3')
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.22")
 
 }
