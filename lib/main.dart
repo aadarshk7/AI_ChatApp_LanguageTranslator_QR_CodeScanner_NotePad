@@ -41,7 +41,6 @@ class ChatScreen extends StatelessWidget {
         title: const Text('MeroAIChat'),
       ),
       body: Column(
-        child: SingleChildScrollView(
         children: [
           Expanded(
             child: ListView.builder(
