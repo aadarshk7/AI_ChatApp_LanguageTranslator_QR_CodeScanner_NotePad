@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
-// import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
@@ -189,9 +188,12 @@ class LanguageTranslatorProvider extends ChangeNotifier {
   final translator = GoogleTranslator();
   // final flutterTts = FlutterTts();
 
-  List<String> languages = ['English', 'Spanish', 'French', 'German', 'Nepali'];
+  List<String> languages = [
+    'Arabic', 'Argentinian', 'Brazilian Portuguese', 'English', 'French', 'German', 'Indian', 'Korean', 'Nepal', 'Portuguese', 'Spanish',  // Add more languages here
+  ];
+
   String fromLanguage = 'English';
-  String toLanguage = 'Nepali';
+  String toLanguage = 'Nepal';
   String translatedText = '';
 
   void setFromLanguage(String language) {
@@ -220,18 +222,30 @@ class LanguageTranslatorProvider extends ChangeNotifier {
 
   String _getLanguageCode(String language) {
     switch (language) {
+      case 'Arabic':
+        return 'ar';
+      case 'Argentinian':
+        return 'es-AR';
+      case 'Brazilian Portuguese':
+        return 'pt-BR';
       case 'English':
         return 'en';
-      case 'Spanish':
-        return 'es';
       case 'French':
         return 'fr';
       case 'German':
         return 'de';
-        case 'Nepal':
+      case 'Indian':
+        return 'hi';
+      case 'Korean':
+        return 'ko';
+      case 'Nepal':
         return 'ne';
+      case 'Portuguese':
+        return 'pt';
+      case 'Spanish':
+        return 'es';
       default:
-        return 'en';
+        return 'en';  // Default to English if not found
     }
   }
 }
