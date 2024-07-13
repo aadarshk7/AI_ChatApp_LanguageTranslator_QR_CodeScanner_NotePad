@@ -153,9 +153,9 @@ class LanguageTranslatorScreen extends StatelessWidget {
                       child: SingleChildScrollView(
                         child: Text(
                           provider.translatedText,
-                          style: TextStyle(
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
                             fontSize: 16,
-                            color: Theme.of(context).textTheme.bodyText1!.color,
+                            color: Theme.of(context).textTheme.bodyText1.color ?? Colors.black, // Fallback to a default color
                           ),
                         ),
                       ),
