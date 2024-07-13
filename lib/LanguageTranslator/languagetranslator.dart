@@ -155,7 +155,7 @@ class LanguageTranslatorScreen extends StatelessWidget {
                           provider.translatedText,
                           style: TextStyle(
                             fontSize: 16,
-                            color: Theme.of(context).textTheme.bodyLarge?.color ?? Colors.black,
+                            color: Theme.of(context).textTheme.bodyLarge!.color,
                           ),
                         ),
                       ),
