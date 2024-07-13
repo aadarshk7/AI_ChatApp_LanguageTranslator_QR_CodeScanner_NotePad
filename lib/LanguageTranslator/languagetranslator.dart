@@ -13,17 +13,10 @@ class LanguageTranslator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, _) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            theme: themeProvider.getTheme(),
-            darkTheme: ThemeData.dark(),
-            themeMode: themeProvider.getThemeMode(),
-            home: LanguageTranslatorScreen(),
-          );
-        },
+      create: (context) => LanguageTranslatorProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: LanguageTranslatorScreen(),
       ),
     );
   }
@@ -35,7 +28,6 @@ class LanguageTranslatorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<LanguageTranslatorProvider>(context);
-    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -53,59 +45,48 @@ class LanguageTranslatorScreen extends StatelessWidget {
               // Add favorites page navigation
             },
           ),
-          IconButton(
-            icon: Icon(themeProvider.getThemeMode() == ThemeMode.dark
-                ? Icons.light_mode
-                : Icons.dark_mode),
-            onPressed: () {
-              themeProvider.toggleTheme(
-                  themeProvider.getThemeMode() == ThemeMode.light);
-            },
-          ),
         ],
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  DropdownButton<String>(
-                    value: provider.fromLanguage,
-                    items: provider.languages.map((String language) {
-                      return DropdownMenuItem<String>(
-                        value: language,
-                        child: Text(language),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      provider.setFromLanguage(newValue!);
-                    },
-                  ),
-                  Icon(Icons.swap_horiz),
-                  DropdownButton<String>(
-                    value: provider.toLanguage,
-                    items: provider.languages.map((String language) {
-                      return DropdownMenuItem<String>(
-                        value: language,
-                        child: Text(language),
-                      );
-                    }).toList(),
-                    onChanged: (String? newValue) {
-                      provider.setToLanguage(newValue!);
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                height: 200, // Adjust the height as needed
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                DropdownButton<String>(
+                  value: provider.fromLanguage,
+                  items: provider.languages.map((String language) {
+                    return DropdownMenuItem<String>(
+                      value: language,
+                      child: Text(language),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    provider.setFromLanguage(newValue!);
+                  },
+                ),
+                Icon(Icons.swap_horiz),
+                DropdownButton<String>(
+                  value: provider.toLanguage,
+                  items: provider.languages.map((String language) {
+                    return DropdownMenuItem<String>(
+                      value: language,
+                      child: Text(language),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    provider.setToLanguage(newValue!);
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            SingleChildScrollView( // Wrap the Container with SingleChildScrollView
+              child: Container(
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -132,13 +113,13 @@ class LanguageTranslatorScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              AnimatedContainer(
-                duration: Duration(milliseconds: 300),
-                height: 200, // Adjust the height as needed
+            ),
+            SizedBox(height: 20),
+            SingleChildScrollView( // Wrap the Container with SingleChildScrollView
+              child: Container(
                 padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
-                  color: Theme.of(context).cardColor,
+                  color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
@@ -149,17 +130,7 @@ class LanguageTranslatorScreen extends StatelessWidget {
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 10),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Text(
-                          provider.translatedText,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).textTheme.bodyLarge!.color,
-                          ),
-                        ),
-                      ),
-                    ),
+                    Text(provider.translatedText),
                     SizedBox(height: 10),
                     Row(
                       children: [
@@ -183,8 +154,8 @@ class LanguageTranslatorScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -204,10 +175,10 @@ class LanguageTranslatorScreen extends StatelessWidget {
         ],
         currentIndex: 2,
         onTap: (index) {
-          if (index == 1) {
+          if(index ==1){
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => CameraScannerScreen()),
+              MaterialPageRoute(builder: (context)=> CameraScannerScreen()),
             );
           }
           // Handle bottom navigation tap
@@ -280,28 +251,5 @@ class LanguageTranslatorProvider extends ChangeNotifier {
       default:
         return 'en';  // Default to English if not found
     }
-  }
-}
-
-class ThemeProvider with ChangeNotifier {
-  ThemeMode _themeMode = ThemeMode.light;
-
-  ThemeMode getThemeMode() => _themeMode;
-
-  ThemeData getTheme() {
-    if (_themeMode == ThemeMode.dark) {
-      return ThemeData.dark().copyWith(
-        // Customize dark theme colors and settings here
-      );
-    } else {
-      return ThemeData.light().copyWith(
-        // Customize light theme colors and settings here
-      );
-    }
-  }
-
-  void toggleTheme(bool isDark) {
-    _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
-    notifyListeners();
   }
 }
