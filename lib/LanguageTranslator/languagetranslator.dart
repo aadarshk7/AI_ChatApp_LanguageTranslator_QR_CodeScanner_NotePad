@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:translator/translator.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+// import 'package:flutter_tts/flutter_tts.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/services.dart';
@@ -135,7 +135,7 @@ class LanguageTranslatorScreen extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.volume_up),
                         onPressed: () {
-                          provider.speakText(provider.translatedText);
+                          // provider.speakText(provider.translatedText);
                         },
                       ),
                       IconButton(
@@ -187,7 +187,7 @@ class LanguageTranslatorScreen extends StatelessWidget {
 
 class LanguageTranslatorProvider extends ChangeNotifier {
   final translator = GoogleTranslator();
-  final flutterTts = FlutterTts();
+  // final flutterTts = FlutterTts();
 
   List<String> languages = ['English', 'Spanish', 'French', 'German', 'Nepali'];
   String fromLanguage = 'English';
@@ -212,10 +212,11 @@ class LanguageTranslatorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void speakText(String text) async {
-    await flutterTts.setLanguage(_getLanguageCode(toLanguage));
-    await flutterTts.speak(text);
-  }
+  //
+  // void speakText(String text) async {
+  //   await flutterTts.setLanguage(_getLanguageCode(toLanguage));
+  //   await flutterTts.speak(text);
+  // }
 
   String _getLanguageCode(String language) {
     switch (language) {
