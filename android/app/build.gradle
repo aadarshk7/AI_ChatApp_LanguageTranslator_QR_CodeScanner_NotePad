@@ -78,7 +78,7 @@ flutter {
 }
 
 dependencies {
-    implementation 'com.android.support:multidex:1.0.3'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation ('com.android.support:multidex:1.0.3')
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 }
