@@ -48,123 +48,114 @@ class LanguageTranslatorScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+        padding: const EdgeInsets.all(5.0), // this is used to change pixel overflow
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    DropdownButton<String>(
-                      value: provider.fromLanguage,
-                      items: provider.languages.map((String language) {
-                        return DropdownMenuItem<String>(
-                          value: language,
-                          child: Text(language),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        provider.setFromLanguage(newValue!);
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.swap_horiz),
-                      onPressed: () {
-                        // Implement swap logic here
-                      },
-                    ),
-                    DropdownButton<String>(
-                      value: provider.toLanguage,
-                      items: provider.languages.map((String language) {
-                        return DropdownMenuItem<String>(
-                          value: language,
-                          child: Text(language),
-                        );
-                      }).toList(),
-                      onChanged: (String? newValue) {
-                        provider.setToLanguage(newValue!);
-                      },
-                    ),
-                  ],
+                DropdownButton<String>(
+                  value: provider.fromLanguage,
+                  items: provider.languages.map((String language) {
+                    return DropdownMenuItem<String>(
+                      value: language,
+                      child: Text(language),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    provider.setFromLanguage(newValue!);
+                  },
                 ),
-                SizedBox(height: 20),
-                Container(
-                  width: MediaQuery.of(context).size.width - 32, // Adjust width as needed
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        provider.fromLanguage,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 10),
-                      TextField(
-                        controller: _controller,
-                        maxLines: 5,
-                        decoration: InputDecoration.collapsed(
-                            hintText: 'Enter text to translate'),
-                      ),
-                      SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          await provider.translateText(_controller.text);
-                        },
-                        child: Text('Translate'),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  width: MediaQuery.of(context).size.width - 32, // Adjust width as needed
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        provider.toLanguage,
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 10),
-                      Text(provider.translatedText),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.volume_up),
-                            onPressed: () {
-                              // provider.speakText(provider.translatedText);
-                            },
-                          ),
-                          IconButton(
-                            icon: Icon(Icons.copy),
-                            onPressed: () {
-                              Clipboard.setData(
-                                  ClipboardData(text: provider.translatedText));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Copied to Clipboard')));
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                Icon(Icons.swap_horiz),
+                DropdownButton<String>(
+                  value: provider.toLanguage,
+                  items: provider.languages.map((String language) {
+                    return DropdownMenuItem<String>(
+                      value: language,
+                      child: Text(language),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    provider.setToLanguage(newValue!);
+                  },
                 ),
               ],
             ),
-          ),
+            SizedBox(height: 20),
+            SingleChildScrollView( // Wrap the Container with SingleChildScrollView
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      provider.fromLanguage,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: _controller,
+                      maxLines: 5,
+                      decoration: InputDecoration.collapsed(
+                          hintText: 'Enter text to translate'),
+                    ),
+                    SizedBox(height: 10),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await provider.translateText(_controller.text);
+                      },
+                      child: Text('Translate'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            SingleChildScrollView( // Wrap the Container with SingleChildScrollView
+              child: Container(
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      provider.toLanguage,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 10),
+                    Text(provider.translatedText),
+                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        IconButton(
+                          icon: Icon(Icons.volume_up),
+                          onPressed: () {
+                            // provider.speakText(provider.translatedText);
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.copy),
+                          onPressed: () {
+                            Clipboard.setData(
+                                ClipboardData(text: provider.translatedText));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Copied to Clipboard')));
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
