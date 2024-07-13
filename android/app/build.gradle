@@ -62,23 +62,4 @@ android {
         applicationId "com.example.ambulancesewa"
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
-    }
 
-    buildTypes {
-        release {
-            signingConfig signingConfigs.debug
-        }
-    }
-}
-
-flutter {
-    source '../..'
-}
-
-dependencies {
-    implementation ('com.android.support:multidex:1.0.3')
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-}
