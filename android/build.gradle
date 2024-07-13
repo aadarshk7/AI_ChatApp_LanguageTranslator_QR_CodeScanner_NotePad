@@ -1,12 +1,14 @@
 buildscript {
-    ext.kotlin_version = '1.9.10' // Update this to match the Kotlin version used by the flutter_tts plugin
+    ext.kotlin_version = '1.8.21'
     repositories {
         google()
         mavenCentral()
     }
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.android.tools.build:gradle:4.1.3"
+        classpath "com.google.gms:google-services:4.4.2"
     }
 }
 
@@ -17,12 +19,12 @@ allprojects {
     }
 }
 
-rootProject.buildDir = "../build"
+rootProject.buildDir = '../build'
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(":app")
+    project.evaluationDependsOn(':app')
 }
 
 tasks.register("clean", Delete) {
