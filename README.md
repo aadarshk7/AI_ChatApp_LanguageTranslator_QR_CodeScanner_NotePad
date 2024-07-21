@@ -1,5 +1,5 @@
 # AIChat Application
-Fou4 Features in one App
+Four Features in one App
 <h2> App Features..</h2>
 <p> <img src="https://github.com/aadarshk7/meroaichat/blob/master/assets/images/beginning.jpg" height = 777 width=444/> </p>
 <h2>Language Translator</h2>
