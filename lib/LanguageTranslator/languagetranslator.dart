@@ -48,7 +48,7 @@ class LanguageTranslatorScreen extends StatelessWidget {
         ],
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(6.0), // this is used to change pixel overflow
+        padding: const EdgeInsets.all(5.0), // this is used to change pixel overflow
         child: Column(
           children: [
             Row(
