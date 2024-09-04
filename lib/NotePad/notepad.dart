@@ -81,7 +81,8 @@ class NotepadProvider with ChangeNotifier {
   Future<void> saveNote() async {
     if (_currentNote.isNotEmpty) {
       final directory = await getApplicationDocumentsDirectory();
-      final path = '${directory.path}/note_${DateTime.now().millisecondsSinceEpoch}.txt';
+      final path =
+          '${directory.path}/note_${DateTime.now().millisecondsSinceEpoch}.txt';
       final file = File(path);
       await file.writeAsString(_currentNote);
       _notes.add(_currentNote);
@@ -112,7 +113,8 @@ class NotepadScreen extends StatelessWidget {
             },
           ),
           CircleAvatar(
-            backgroundImage: NetworkImage('https://aadarshkunwar.com.np/assets/imgs/coat6v2.jpg'),
+            backgroundImage: NetworkImage(
+                'http://aadarshkunwar.com.np/assets/imgs/coat6v2.jpg'),
           ),
         ],
       ),
@@ -146,21 +148,31 @@ class NotepadScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  IconButton(icon: Icon(Icons.undo), onPressed: () {
-                    provider.undo();
-                  }),
-                  IconButton(icon: Icon(Icons.format_bold), onPressed: () {
-                    provider.setBold();
-                  }),
-                  IconButton(icon: Icon(Icons.format_italic), onPressed: () {
-                    provider.setItalic();
-                  }),
-                  IconButton(icon: Icon(Icons.format_underline), onPressed: () {
-                    provider.setUnderline();
-                  }),
-                  IconButton(icon: Icon(Icons.color_lens), onPressed: () {
-                    // Implement color picker
-                  }),
+                  IconButton(
+                      icon: Icon(Icons.undo),
+                      onPressed: () {
+                        provider.undo();
+                      }),
+                  IconButton(
+                      icon: Icon(Icons.format_bold),
+                      onPressed: () {
+                        provider.setBold();
+                      }),
+                  IconButton(
+                      icon: Icon(Icons.format_italic),
+                      onPressed: () {
+                        provider.setItalic();
+                      }),
+                  IconButton(
+                      icon: Icon(Icons.format_underline),
+                      onPressed: () {
+                        provider.setUnderline();
+                      }),
+                  IconButton(
+                      icon: Icon(Icons.color_lens),
+                      onPressed: () {
+                        // Implement color picker
+                      }),
                 ],
               ),
               SizedBox(height: 10),
