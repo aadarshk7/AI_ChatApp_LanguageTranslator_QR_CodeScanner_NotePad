@@ -11,6 +11,7 @@ class ChatbotService {
     final content = [Content.text(query)];
     final response = await model.generateContent(content);
 
-    return response.text; // Assuming response.text contains the chatbot's reply
+    return response.text;
+    // Assuming response.text contains the chatbot's reply
   }
 }
