@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'chat_provider.dart'; // Correct import for ChatProvider
 import 'choicepage.dart';
 import 'splash_screen.dart'; // Import your SplashScreen widget
-//main method
 void main() {
+  // main function
   runApp(MyApp());
 }
 
