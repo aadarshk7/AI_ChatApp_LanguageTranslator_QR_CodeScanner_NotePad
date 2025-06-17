@@ -1,4 +1,4 @@
-# AIChat Application
+# AI Chat Application
 Four Features in one App
 <h2> App Features..</h2>
 <p> <img src="https://github.com/aadarshk7/meroaichat/blob/master/assets/images/beginning.jpg" height = 444 width=222/> </p>
